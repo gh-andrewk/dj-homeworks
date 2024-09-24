@@ -1,6 +1,7 @@
 from django.http import HttpResponse
 from django.shortcuts import render, reverse
 
+from pathlib import Path
 from datetime import datetime
 
 
@@ -10,8 +11,8 @@ def home_view(request):
     # функцию `reverse`
     pages = {
         "Главная страница": reverse("home"),
-        "Показать текущее время": "",
-        "Показать содержимое рабочей директории": "",
+        "Показать текущее время": reverse("time"),
+        "Показать содержимое рабочей директории": reverse("workdir"),
     }
 
     # context и параметры render менять не нужно
@@ -32,4 +33,6 @@ def workdir_view(request):
     # по аналогии с `time_view`, напишите код,
     # который возвращает список файлов в рабочей
     # директории
-    raise NotImplemented
+    files = [str(f) for f in Path().glob("*") if f.is_file()]
+    msg = f"Список файлов: {', '.join(files)}"
+    return HttpResponse(msg)
