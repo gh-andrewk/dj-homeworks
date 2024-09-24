@@ -15,7 +15,8 @@ Including another URLconf
 """
 
 from django.urls import path
+from calculator.views import calculator_view
 
 urlpatterns = [
-    # здесь зарегистрируйте вашу view-функцию
+    path("<str:product>/", calculator_view, name="index"),
 ]
